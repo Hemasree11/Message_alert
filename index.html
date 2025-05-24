@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SOS Emergency Alert</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background: #fff3f3;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 500px;
+        margin: 2rem auto;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(255, 72, 66, 0.1);
+        padding: 2rem;
+        text-align: center;
+      }
+
+      .header-img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+      }
+
+      h1 {
+        color: #d32f2f;
+        margin: 1rem 0;
+      }
+
+      p {
+        color: #444;
+        margin-bottom: 1.5rem;
+      }
+
+      input {
+        width: 100%;
+        padding: 0.75rem;
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+      }
+
+      button {
+        width: 100%;
+        padding: 0.8rem;
+        background-color: #d32f2f;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: #b71c1c;
+      }
+
+      .footer {
+        margin-top: 1.2rem;
+        font-size: 0.85rem;
+        color: #999;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <img
+        class="header-img"
+        src="C:\Users\hemas\Desktop\Scaler - Build Verse\image.jpeg"
+        alt="Medical Emergency Image"
+      />
+
+      <h1>🚨 SOS Emergency Alert</h1>
+      <p>
+        In case of a medical emergency, send an instant SOS to the nearest care
+        provider.
+      </p>
+
+      <input
+        type="tel"
+        id="phone"
+        placeholder="Enter phone number (e.g. +91...)"
+        required
+      />
+      <button onclick="sendSOS()">Send SOS</button>
+
+      <div class="footer">Powered by Twilio · For emergency use only</div>
+    </div>
+
+    <script>
+      function sendSOS() {
+        const phone = document.getElementById("phone").value;
+        fetch("/send-sos", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            phone: phone,
+            message: "🚨 SOS Alert: Medical help needed!",
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) =>
+            alert(
+              data.status === "success" ? "✅ SOS Sent!" : "❌ " + data.message
+            )
+          );
+      }
+    </script>
+  </body>
+</html>
